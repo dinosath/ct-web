@@ -1,0 +1,9 @@
+[package]
+name        = "comptime_di"
+version     = "0.1.0"
+edition     = "2024"
+rust-version = "1.94"
+
+[dependencies]
+comptime_di_macros = { path = "../comptime_di_macros" }
+inventory = "0.3"
