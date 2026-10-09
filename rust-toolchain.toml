@@ -1,5 +1,3 @@
+# `ct-rustc` is the stage1 build of ~/Projects/rust (see scripts/link-toolchain.sh).
 [toolchain]
-channel    = "nightly"
-# std::mem::type_info requires nightly ≥ 1.94 (enforced via rust-version in Cargo.toml).
-components = ["rustfmt", "clippy", "rust-src"]
-profile    = "default"
+channel = "ct-rustc"

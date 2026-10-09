@@ -1,0 +1,11 @@
+[package]
+name    = "simple-example"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+ct-web  = { workspace = true }
+axum    = { workspace = true }
+sea-orm = { workspace = true }
+tokio   = { workspace = true }
+serde   = { workspace = true }

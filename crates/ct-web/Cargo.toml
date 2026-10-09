@@ -1,0 +1,14 @@
+[package]
+name    = "ct-web"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+axum       = { workspace = true }
+sea-orm    = { workspace = true }
+tokio      = { workspace = true }
+serde      = { workspace = true }
+serde_json = { workspace = true }
+tower = { workspace = true }
+tower-service = { workspace = true }
+ct-web-macros = { path = "../ct-web-macros" }

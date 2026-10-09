@@ -1,0 +1,8 @@
+[package]
+name = "nested-app"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+ct-web.workspace = true
+nested-controller = { path = "../controller" }

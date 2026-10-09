@@ -1,14 +1,15 @@
 # Compile‑Time Rust Web Framework – Implementation Guide (Future `type_info` + `comptime`)
 
-This document guides an autonomous coding agent on how to evolve a compile‑time web framework that initially uses macros and registries into a reflection‑based system using Rust's upcoming:
+This document guides an autonomous coding agent building a macro-free compile-time web framework using Rust's:
 
 * `std::mem::type_info`
 * `#[comptime]` compile‑time functions
 * crate reflection APIs (future)
 
+The framework must not introduce declarative or procedural macros for route discovery, middleware, or code generation. Use compiler-native tool attributes and reflection/comptime instead.
+
 The goal is to eliminate:
 
-* procedural macros
 * linker registries
 * runtime router construction
 
@@ -36,31 +37,19 @@ Runtime startup should only:
 
 # 2. Target Developer API
 
-Developers should write:
+Developers should write compiler-recognized tool attributes as metadata, not attribute macros:
 
 ```rust
-#[get("/users")]
+#![register_tool(app)]
+
+#[app::route(method = "GET", path = "/users")]
 async fn list_users() {}
 
-#[get("/users/:id")]
+#[app::route(method = "GET", path = "/users/:id")]
 async fn get_user(id: u64) {}
 
-#[post("/orders")]
+#[app::route(method = "POST", path = "/orders")]
 async fn create_order(order: CreateOrder) {}
-```
-
-Controllers optional:
-
-```rust
-#[controller("/users")]
-impl UsersController {
-
-    #[get]
-    async fn list() {}
-
-    #[post]
-    async fn create() {}
-}
 ```
 
 The framework generates a static router automatically.
@@ -105,12 +94,9 @@ Pseudo API (future):
 ```rust
 for func in reflection::crate_functions() {
 
-    if func.has_attribute("get") {
-        register_route(func, Method::GET)
-    }
-
-    if func.has_attribute("post") {
-        register_route(func, Method::POST)
+    if func.has_attribute("app::route") {
+        register_route(func, func.attribute_value("app::route", "method"),
+                       func.attribute_value("app::route", "path"))
     }
 
 }
@@ -432,12 +418,12 @@ Use rust nightly features where possible. For example https://doc.rust-lang.org/
 
 Follow https://github.com/rust-lang/rust-project-goals/issues/406. When #[comptime] land in nightly use it to replace build.rs, inventory 
 
-When reflection stabilizes replace:
+When reflection stabilizes, implement the pipeline directly without introducing macros:
 
 ```
-macros → reflection scanning
-inventory → compile‑time collection
-build.rs → comptime functions
+tool attributes → reflection scanning
+compile-time metadata → compiler-owned item generation
+build scripts → comptime functions
 ```
 
 Public API must remain identical.

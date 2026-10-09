@@ -1,36 +1,30 @@
 [workspace]
-members = [".", "comptime_web_macros", "comptime_orm", "comptime_orm_macros", "comptime_di", "comptime_di_macros"]
-resolver = "2"
+members  = [
+	"crates/ct-web",
+	"crates/ct-web-macros",
+	"examples/simple",
+	"examples/simple-routes",
+	"examples/nested/controller",
+	"examples/nested/app",
+]
+resolver = "3"
 
-[package]
-name        = "comptime_web"
-version     = "0.1.0"
-edition     = "2024"
-# Minimum Rust version – nightly channels always satisfy this constraint.
-# Remove if you pin rust-toolchain.toml to an exact nightly date instead.
-rust-version = "1.94"
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+
+# Local checkouts of the upstream projects (sibling directories of ct-web).
+[workspace.dependencies]
+axum       = { path = "../axum/axum", default-features = false, features = ["http1", "json", "tokio", "query"] }
+sea-orm    = { path = "../sea-orm", default-features = false, features = ["macros", "runtime-tokio-rustls", "sqlx-sqlite", "with-json"] }
+tokio      = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
+serde      = { version = "1", features = ["derive"] }
+serde_json = "1"
+tower = { version = "0.5.2", default-features = false, features = ["make"] }
+tower-service = "0.3"
+ct-web     = { path = "crates/ct-web" }
 
 [profile.release]
 codegen-units = 1
-lto = true
-strip = true
-debug = false
-panic = "abort"
-
-[dependencies]
-hyper = { version = "1.8", features = ["full"] }
-comptime_web_macros = { path = "comptime_web_macros" }
-comptime_orm = { path = "comptime_orm" }
-comptime_di = { path = "comptime_di" }
-inventory = "0.3"
-phf = { version = "0.13", features = ["macros"] }
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "macros"] }
-tokio = { version = "1", features = ["full"] }
-pin-project-lite = "0.2"
-
-[build-dependencies]
-phf_codegen = "0.13"
-
-# No optional features – type_info is unconditionally required (nightly ≥ 1.94).
+lto           = true
+panic         = "abort"

@@ -1,0 +1,4 @@
+[package]
+name = "nested-controller"
+edition.workspace = true
+version.workspace = true
