@@ -1,4 +1,5 @@
 use sea_orm::entity::prelude::*;
+use serde::{Deserialize, Serialize};
 
 #[app::ListCrudRepository]
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, DeriveEntityModel)]
@@ -9,3 +10,8 @@ pub struct Model {
     pub name: String,
     pub email: String,
 }
+
+#[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]
+pub enum Relation {}
+
+impl ActiveModelBehavior for ActiveModel {}

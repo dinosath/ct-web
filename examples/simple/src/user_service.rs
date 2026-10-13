@@ -1,8 +1,9 @@
 use sea_orm::DbErr;
 
-use crate::entity::{self, Repository};
+use crate::{entity, repository::Repository};
 
 #[app::singleton]
+#[derive(Clone)]
 pub struct UserService {
     #[app::inject]
     repository: Repository,

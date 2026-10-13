@@ -2,6 +2,7 @@
 members  = [
 	"crates/ct-web",
 	"crates/ct-web-macros",
+	"crates/ct-di",
 	"examples/simple",
 	"examples/simple-routes",
 	"examples/nested/controller",
@@ -23,6 +24,7 @@ serde_json = "1"
 tower = { version = "0.5.2", default-features = false, features = ["make"] }
 tower-service = "0.3"
 ct-web     = { path = "crates/ct-web" }
+ct-di      = { path = "crates/ct-di" }
 
 [profile.release]
 codegen-units = 1

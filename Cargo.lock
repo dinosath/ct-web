@@ -330,6 +330,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "ct-di"
+version = "0.1.0"
+
+[[package]]
 name = "ct-web"
 version = "0.1.0"
 dependencies = [
@@ -1700,6 +1704,7 @@ name = "simple-example"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "ct-di",
  "ct-web",
  "sea-orm",
  "serde",
